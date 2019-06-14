@@ -1,0 +1,35 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Resources:
+  WebServer:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: PublicRead
+      WebsiteConfiguration:
+        IndexDocument: "index.html"
+
+  WebServerBucketPolicy:
+    Type: "AWS::S3::BucketPolicy"
+    Properties:
+      Bucket: !Ref "WebServer"
+      PolicyDocument:
+        Statement:
+          -
+            Action:
+              - "s3:GetObject"
+            Effect: "Allow"
+            Resource: 
+              Fn::Join:
+                - ""
+                - 
+                  - "arn:aws:s3:::"
+                  -
+                    Ref: "WebServer"
+                  - "/*"
+            Principal: "*"
+            Sid: "PublicReadForGetBucketObjects"
+
+Outputs:
+  Url: 
+    Description: The url at which the application is available
+    Value: !GetAtt "WebServer.WebsiteURL"
