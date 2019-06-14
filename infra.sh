@@ -1,5 +1,5 @@
 STACK_NAME="MythicalMysfits"
-TEMPLATE=./infra/cloudformation.yml
+TEMPLATE=./infra/core.yml
 
 if [ $1 == 'create' ]
 then
